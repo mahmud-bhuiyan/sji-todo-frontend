@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 .App {
-  text-align: center;
+  /* text-align: center; */
   height: 100vh;
 }
-
+/* 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -40,4 +40,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
