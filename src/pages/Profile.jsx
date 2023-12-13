@@ -1,17 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { getUserProfile } from "../utils/user";
 
 const Profile = () => {
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const user = await getUserProfile();
+        console.log(user);
+        setUserData(user);
+      } catch (error) {
+        console.error("Failed to fetch user profile:", error);
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
+
   return (
     <div className="max-w-md mx-auto my-8 p-8 bg-white rounded shadow-md text-center">
       <h2 className="text-2xl font-semibold mb-4 uppercase">User Profile</h2>
 
       <div className="mb-4">
         <p className="mb-2">
-          <span className="font-semibold">Name:</span> John Doe
+          <span className="font-semibold">Name:</span> {userData.name}
         </p>
         <p className="mb-2">
-          <span className="font-semibold">Email:</span> john.doe@example.com
+          <span className="font-semibold">Email:</span> {userData.email}
         </p>
       </div>
 

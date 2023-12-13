@@ -1,6 +1,5 @@
 import axios from "axios";
 
-// const apiURL = "https://jsonplaceholder.typicode.com";
 const apiURL = "https://jsonplaceholder.typicode.com";
 
 export const axiosOpen = axios.create({

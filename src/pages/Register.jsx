@@ -1,5 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { registerUser } from "../utils/user";
 
 const Register = () => {
   const {
@@ -9,8 +11,21 @@ const Register = () => {
     watch,
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const navigate = useNavigate();
+
+  const onSubmit = async (data) => {
+    try {
+      const response = await registerUser(data);
+
+      if (response.user._id) {
+        navigate("/");
+        console.log("User registered successfully");
+      } else {
+        console.log("Failed to register user");
+      }
+    } catch (error) {
+      console.error("ERROR:", error.response.data.msg);
+    }
   };
 
   return (
