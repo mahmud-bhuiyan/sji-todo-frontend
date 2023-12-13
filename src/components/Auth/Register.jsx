@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { registerUser } from "../utils/user";
+import { registerUser } from "../../services/user";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../providers/AuthProvider";
+import { AuthContext } from "../../services/AuthProvider";
 
 const Register = () => {
   const {

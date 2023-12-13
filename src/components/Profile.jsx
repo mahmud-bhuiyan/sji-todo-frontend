@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { logoutUser } from "../utils/user";
+import { logoutUser } from "../services/user";
 import { Helmet } from "react-helmet-async";
-import { AuthContext } from "../providers/AuthProvider";
+import { AuthContext } from "../services/AuthProvider";
 
 const Profile = () => {
   const navigate = useNavigate();

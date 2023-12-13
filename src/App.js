@@ -2,12 +2,12 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
-import Register from "./components/Register";
-import Login from "./components/Login";
+import Register from "./components/Auth/Register";
+import Login from "./components/Auth/Login";
 import Profile from "./components/Profile";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "./providers/AuthProvider";
-import { getUserProfile } from "./utils/user";
+import { AuthContext } from "./services/AuthProvider";
+import { getUserProfile } from "./services/user";
 
 function App() {
   const { setUser } = useContext(AuthContext);

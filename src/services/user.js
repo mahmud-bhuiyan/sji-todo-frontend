@@ -1,4 +1,4 @@
-import { axiosOpen, axiosSecure } from "./axios";
+import { axiosOpen, axiosSecure } from "../utils/axios";
 
 const apiUrl = "http://localhost:3001/api/v1";
 
