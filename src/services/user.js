@@ -1,13 +1,11 @@
 import { axiosOpen, axiosSecure } from "../utils/axios";
 
-const apiUrl = "http://localhost:3001/api/v1";
-
 // =============================================
 //                     register
 // =============================================
 export const registerUser = async (user) => {
   try {
-    const response = await axiosOpen.post(`${apiUrl}/users/register`, user);
+    const response = await axiosOpen.post("/users/register", user);
 
     // Store the token in localStorage
     const { token } = response.data;
@@ -26,7 +24,7 @@ export const registerUser = async (user) => {
 // =============================================
 export const loginUser = async (credentials) => {
   try {
-    const response = await axiosOpen.post(`${apiUrl}/users/login`, credentials);
+    const response = await axiosOpen.post("/users/login", credentials);
 
     // Store the token in localStorage
     const { token } = response.data;
@@ -76,6 +74,25 @@ export const updateUserProfile = async (updatedUserData) => {
     return response.data;
   } catch (error) {
     console.error("Error updating user profile:", error.response.data.msg);
+    throw error;
+  }
+};
+
+// =============================================
+//                 update password
+// =============================================
+export const updateUserPassword = async (passwordData) => {
+  try {
+    const response = await axiosSecure.patch(
+      "/users/updatePassword",
+      passwordData
+    );
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error updating user password:",
+      error.response?.data?.msg || error.message
+    );
     throw error;
   }
 };

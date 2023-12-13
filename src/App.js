@@ -9,6 +9,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "./services/AuthProvider";
 import { getUserProfile } from "./services/user";
 import UpdateProfile from "./components/UpdateProfile";
+import UpdatePassword from "./components/UpdatePassword";
 
 function App() {
   const { setUser } = useContext(AuthContext);
@@ -19,7 +20,7 @@ function App() {
       try {
         const userData = await getUserProfile();
         setUser(userData);
-        // console.log(userData);
+        console.log(userData);
       } catch (error) {
         console.error("Failed to fetch user profile:", error);
       } finally {
@@ -44,6 +45,7 @@ function App() {
           <Route path="/user/login" element={<Login />} />
           <Route path="/user/profile" element={<Profile />} />
           <Route path="/user/update-profile" element={<UpdateProfile />} />
+          <Route path="/user/update-password" element={<UpdatePassword />} />
         </Routes>
       </BrowserRouter>
     </div>
