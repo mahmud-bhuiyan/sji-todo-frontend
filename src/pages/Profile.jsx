@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { getUserProfile } from "../utils/user";
+import { Link, useNavigate } from "react-router-dom";
+import { getUserProfile, logoutUser } from "../utils/user";
 
 const Profile = () => {
   const [userData, setUserData] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
         const user = await getUserProfile();
-        console.log(user);
         setUserData(user);
+        console.log(user);
       } catch (error) {
         console.error("Failed to fetch user profile:", error);
       }
@@ -18,6 +19,16 @@ const Profile = () => {
 
     fetchUserProfile();
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+      navigate("/");
+      window.location.reload();
+    } catch (error) {
+      console.error("Error logging out:", error.message);
+    }
+  };
 
   return (
     <div className="max-w-md mx-auto my-8 p-8 bg-white rounded shadow-md text-center">
@@ -47,7 +58,7 @@ const Profile = () => {
         </Link>
         <button
           className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:shadow-outline-red active:bg-red-800 cursor-pointer"
-          onClick={() => console.log("Logout button clicked")}
+          onClick={handleLogout}
         >
           Logout
         </button>

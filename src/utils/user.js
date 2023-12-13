@@ -29,6 +29,20 @@ export const registerUser = async (user) => {
 };
 
 // =============================================
+//                     logout
+// =============================================
+export const logoutUser = async () => {
+  try {
+    // Clear the token from localStorage
+    localStorage.removeItem("userToken");
+    return { success: true };
+  } catch (error) {
+    console.error("Error logging out:", error.response.data.msg);
+    throw error;
+  }
+};
+
+// =============================================
 //                  user details
 // =============================================
 export const getUserProfile = async () => {
