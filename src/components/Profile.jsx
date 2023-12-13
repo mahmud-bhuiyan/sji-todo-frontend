@@ -1,30 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getUserProfile, logoutUser } from "../utils/user";
+import { logoutUser } from "../utils/user";
 import { Helmet } from "react-helmet-async";
+import { AuthContext } from "../providers/AuthProvider";
 
 const Profile = () => {
-  const [userData, setUserData] = useState({});
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        const user = await getUserProfile();
-        setUserData(user);
-        console.log(user);
-      } catch (error) {
-        console.error("Failed to fetch user profile:", error);
-      }
-    };
-
-    fetchUserProfile();
-  }, []);
+  const { user, setUser } = useContext(AuthContext);
 
   const handleLogout = async () => {
     try {
       await logoutUser();
-      navigate("/");
+      setUser({});
+      navigate("/user/login");
       window.location.reload();
     } catch (error) {
       console.error("Error logging out:", error.message);
@@ -40,10 +28,10 @@ const Profile = () => {
 
       <div className="mb-4">
         <p className="mb-2">
-          <span className="font-semibold">Name:</span> {userData.name}
+          <span className="font-semibold">Name:</span> {user?.name}
         </p>
         <p className="mb-2">
-          <span className="font-semibold">Email:</span> {userData.email}
+          <span className="font-semibold">Email:</span> {user?.email}
         </p>
       </div>
 

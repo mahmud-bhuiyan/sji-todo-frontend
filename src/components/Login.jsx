@@ -1,56 +1,44 @@
 import React, { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { registerUser } from "../utils/user";
+import { loginUser } from "../utils/user";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 
-const Register = () => {
+const Login = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
   } = useForm();
 
   const navigate = useNavigate();
-  const { user, setUser } = useContext(AuthContext);
+  const { setUser } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     try {
-      const response = await registerUser(data);
+      const response = await loginUser(data);
 
       if (response.user._id) {
         setUser(response.user);
-        console.log(response.user);
+        // console.log(response.user);
         navigate("/");
-        console.log("User registered successfully");
+        console.log("User logged in successfully");
       } else {
-        console.log("Failed to register user");
+        console.log("Failed to login user");
       }
     } catch (error) {
-      console.error("ERROR:", error.response.data.msg);
+      console.error("Error logging in:", error.message);
     }
   };
 
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded shadow-md">
       <Helmet>
-        <title>Register | TODO</title>
+        <title>Login | TODO</title>
       </Helmet>
-      <h2 className="text-2xl font-semibold mb-4">Register</h2>
+      <h2 className="text-2xl font-semibold mb-4">Login</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-4">
-          <label className="block text-gray-600">Name:</label>
-          <input
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-            {...register("name", { required: "Name is required" })}
-          />
-          {errors.name && (
-            <span className="text-red-500">{errors.name.message}</span>
-          )}
-        </div>
-
         <div className="mb-4">
           <label className="block text-gray-600">Email:</label>
           <input
@@ -87,32 +75,15 @@ const Register = () => {
           )}
         </div>
 
-        <div className="mb-4">
-          <label className="block text-gray-600">Confirm Password:</label>
-          <input
-            type="password"
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-            {...register("confirmPassword", {
-              required: "Confirm Password is required",
-              validate: (value) =>
-                value === watch("password") || "Passwords do not match",
-            })}
-          />
-          {errors.confirmPassword && (
-            <span className="text-red-500">
-              {errors.confirmPassword.message}
-            </span>
-          )}
-        </div>
-
-        <input
+        <button
           type="submit"
-          value="Register"
           className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
-        />
+        >
+          Login
+        </button>
       </form>
     </div>
   );
 };
 
-export default Register;
+export default Login;

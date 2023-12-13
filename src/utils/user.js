@@ -1,20 +1,13 @@
-import axios from "axios";
+import { axiosOpen, axiosSecure } from "./axios";
 
-const apiUrl = "http://localhost:3001/api/v1/users";
-
-const token = localStorage.getItem("userToken");
+const apiUrl = "http://localhost:3001/api/v1";
 
 // =============================================
 //                     register
 // =============================================
 export const registerUser = async (user) => {
   try {
-    const response = await axios.post(`${apiUrl}/register`, user, {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    });
+    const response = await axiosOpen.post(`${apiUrl}/users/register`, user);
 
     // Store the token in localStorage
     const { token } = response.data;
@@ -33,12 +26,7 @@ export const registerUser = async (user) => {
 // =============================================
 export const loginUser = async (credentials) => {
   try {
-    const response = await axios.post(`${apiUrl}/login`, credentials, {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    });
+    const response = await axiosOpen.post(`${apiUrl}/users/login`, credentials);
 
     // Store the token in localStorage
     const { token } = response.data;
@@ -71,13 +59,7 @@ export const logoutUser = async () => {
 // =============================================
 export const getUserProfile = async () => {
   try {
-    const response = await axios.get(`${apiUrl}/me`, {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axiosSecure.get("/users/me");
     return response.data;
   } catch (error) {
     console.error("Error fetching user profile:", error.response.data.msg);
