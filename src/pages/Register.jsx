@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../utils/user";
+import { Helmet } from "react-helmet-async";
 
 const Register = () => {
   const {
@@ -30,6 +31,9 @@ const Register = () => {
 
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded shadow-md">
+      <Helmet>
+        <title>Register | TODO</title>
+      </Helmet>
       <h2 className="text-2xl font-semibold mb-4">Register</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">

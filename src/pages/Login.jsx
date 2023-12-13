@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 
 const Login = () => {
@@ -14,6 +15,9 @@ const Login = () => {
 
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded shadow-md">
+      <Helmet>
+        <title>Login | TODO</title>
+      </Helmet>
       <h2 className="text-2xl font-semibold mb-4">Login</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">

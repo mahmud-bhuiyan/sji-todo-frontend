@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getUserProfile, logoutUser } from "../utils/user";
+import { Helmet } from "react-helmet-async";
 
 const Profile = () => {
   const [userData, setUserData] = useState({});
@@ -32,6 +33,9 @@ const Profile = () => {
 
   return (
     <div className="max-w-md mx-auto my-8 p-8 bg-white rounded shadow-md text-center">
+      <Helmet>
+        <title>Profile | TODO</title>
+      </Helmet>
       <h2 className="text-2xl font-semibold mb-4 uppercase">User Profile</h2>
 
       <div className="mb-4">
