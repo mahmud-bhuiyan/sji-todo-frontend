@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
+import { loginUser } from "../utils/user";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../providers/AuthProvider";
 
 const Login = () => {
   const {
@@ -9,8 +12,24 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const navigate = useNavigate();
+  const { user, setUser } = useContext(AuthContext);
+
+  const onSubmit = async (data) => {
+    try {
+      const response = await loginUser(data);
+
+      if (response.user._id) {
+        setUser(response.user);
+        console.log(response.user);
+        navigate("/");
+        console.log("User logged in successfully");
+      } else {
+        console.log("Failed to login user");
+      }
+    } catch (error) {
+      console.error("Error logging in:", error.message);
+    }
   };
 
   return (

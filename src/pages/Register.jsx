@@ -1,8 +1,9 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { registerUser } from "../utils/user";
+import React, { useContext } from "react";
 import { Helmet } from "react-helmet-async";
+import { useForm } from "react-hook-form";
+import { registerUser } from "../utils/user";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../providers/AuthProvider";
 
 const Register = () => {
   const {
@@ -13,12 +14,15 @@ const Register = () => {
   } = useForm();
 
   const navigate = useNavigate();
+  const { user, setUser } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     try {
       const response = await registerUser(data);
 
       if (response.user._id) {
+        setUser(response.user);
+        console.log(response.user);
         navigate("/");
         console.log("User registered successfully");
       } else {

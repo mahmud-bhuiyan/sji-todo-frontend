@@ -5,7 +5,7 @@ const apiUrl = "http://localhost:3001/api/v1/users";
 const token = localStorage.getItem("userToken");
 
 // =============================================
-//                    register
+//                     register
 // =============================================
 export const registerUser = async (user) => {
   try {
@@ -20,10 +20,34 @@ export const registerUser = async (user) => {
     const { token } = response.data;
     localStorage.setItem("userToken", token);
 
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error registering user:", error.response.data.msg);
+    throw error;
+  }
+};
+
+// =============================================
+//                      login
+// =============================================
+export const loginUser = async (credentials) => {
+  try {
+    const response = await axios.post(`${apiUrl}/login`, credentials, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+
+    // Store the token in localStorage
+    const { token } = response.data;
+    localStorage.setItem("userToken", token);
+
+    // console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error logging in:", error.response.data.msg);
     throw error;
   }
 };
