@@ -66,3 +66,16 @@ export const getUserProfile = async () => {
     throw error;
   }
 };
+
+// =============================================
+//                   update user
+// =============================================
+export const updateUserProfile = async (updatedUserData) => {
+  try {
+    const response = await axiosSecure.patch("/users/update", updatedUserData);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating user profile:", error.response.data.msg);
+    throw error;
+  }
+};

@@ -8,6 +8,7 @@ import Profile from "./components/Profile";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "./services/AuthProvider";
 import { getUserProfile } from "./services/user";
+import UpdateProfile from "./components/UpdateProfile";
 
 function App() {
   const { setUser } = useContext(AuthContext);
@@ -42,6 +43,7 @@ function App() {
           <Route path="/user/register" element={<Register />} />
           <Route path="/user/login" element={<Login />} />
           <Route path="/user/profile" element={<Profile />} />
+          <Route path="/user/update-profile" element={<UpdateProfile />} />
         </Routes>
       </BrowserRouter>
     </div>

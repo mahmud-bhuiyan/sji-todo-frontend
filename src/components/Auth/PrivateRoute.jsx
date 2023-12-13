@@ -8,14 +8,14 @@ const PrivateRoute = ({ children }) => {
   const location = useLocation();
 
   if (loading) {
-    return <progress className="progress w-56"></progress>;
+    return <div>Loading...</div>;
   }
 
   if (user?.email) {
     return children;
   }
 
-  return <Navigate state={{ from: location }} to="/login" replace></Navigate>;
+  return <Navigate state={{ from: location }} to="/user/login" replace></Navigate>;
 };
 
 export default PrivateRoute;
