@@ -16,7 +16,7 @@ export const createTodo = async (taskDetails) => {
 };
 
 // =============================================
-//               Get Todos for User
+//                Get Todos for User
 // =============================================
 export const getUserTodos = async () => {
   try {
@@ -25,6 +25,20 @@ export const getUserTodos = async () => {
     return response.data;
   } catch (error) {
     console.error("Error fetching todos for user:", error.response.data.msg);
+    throw error;
+  }
+};
+
+// =============================================
+//                    Delete Todo
+// =============================================
+export const deleteTodo = async (todoId) => {
+  try {
+    const response = await axiosSecure.delete(`/tasks/${todoId}`);
+
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting todo:", error.response.data.msg);
     throw error;
   }
 };

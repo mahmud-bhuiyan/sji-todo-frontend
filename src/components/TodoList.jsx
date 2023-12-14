@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getUserTodos } from "../services/todo";
+import { deleteTodo, getUserTodos } from "../services/todo";
 import TodoItem from "./TodoItem";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
@@ -10,8 +11,7 @@ const TodoList = () => {
     const fetchTodos = async () => {
       try {
         const response = await getUserTodos();
-
-        console.log(response);
+        // console.log(response);
 
         if (response && response.tasks) {
           setTodos(response.tasks);
@@ -26,19 +26,50 @@ const TodoList = () => {
     fetchTodos();
   }, []);
 
-  const onView = (todoId) => {
+  const handleView = (todoId) => {
     // Todo: view action
     console.log("View todo with id:", todoId);
   };
 
-  const onUpdate = (todoId) => {
+  const handleUpdate = (todoId) => {
     // Todo: Update action
     console.log("Update todo with id:", todoId);
   };
 
-  const onDelete = (todoId) => {
-    // Todo: delete action
-    console.log("Delete todo with id:", todoId);
+  const handleDelete = async (todoId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await deleteTodo(todoId);
+
+          // If deletion is successful, update the state
+          setTodos((prevTodos) =>
+            prevTodos.filter((todo) => todo._id !== todoId)
+          );
+
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your todo has been deleted.",
+            icon: "success",
+          });
+        } catch (error) {
+          console.error("Error deleting todo:", error.message);
+          Swal.fire({
+            title: "Error!",
+            text: "An error occurred while deleting todo. Please try again later.",
+            icon: "error",
+          });
+        }
+      }
+    });
   };
 
   return (
@@ -72,9 +103,9 @@ const TodoList = () => {
                 <TodoItem
                   key={todo._id}
                   todo={todo}
-                  onView={onView}
-                  onUpdate={onUpdate}
-                  onDelete={onDelete}
+                  handleView={handleView}
+                  handleUpdate={handleUpdate}
+                  handleDelete={handleDelete}
                 />
               ))}
             </tbody>

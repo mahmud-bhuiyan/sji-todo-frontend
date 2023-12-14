@@ -22,7 +22,7 @@ function App() {
       try {
         const userData = await getUserProfile();
         setUser(userData);
-        console.log(userData);
+        // console.log(userData);
       } catch (error) {
         console.error("Failed to fetch user profile:", error);
       } finally {
