@@ -1,5 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
+import TodoList from "../components/TodoList";
 
 const Dashboard = () => {
   return (
@@ -7,7 +8,7 @@ const Dashboard = () => {
       <Helmet>
         <title>Dashboard | TODO</title>
       </Helmet>
-      <h3>Dashboard</h3>
+      <TodoList />
     </div>
   );
 };
