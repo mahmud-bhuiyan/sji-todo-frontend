@@ -1,100 +1,80 @@
-import React, { useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const NavLinks = ({ isMobile = false, closeMobileMenu }) => {
-  const location = useLocation();
-
-  const links = [
-    { to: "/", text: "Home" },
-    { to: "/user/register", text: "Register" },
-    { to: "/user/login", text: "Login" },
-    { to: "/user/profile", text: "Profile" },
-  ];
-
-  const linkClickHandler = () => {
-    if (isMobile) {
-      closeMobileMenu();
-    }
-  };
-
+const NavLinks = ({ user }) => {
   return (
-    <div className={isMobile ? "block" : "hidden md:flex space-x-4"}>
-      {isMobile && (
-        <div className="bg-white p-4 rounded shadow-lg my-1 absolute right-4 px-10">
-          {links.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              className={`block text-gray-800 hover:text-gray-600 my-2 text-center ${
-                location.pathname === link.to ? "font-bold text-lg" : ""
-              }`}
-              onClick={linkClickHandler}
-            >
-              {link.text}
-            </NavLink>
-          ))}
-        </div>
+    <>
+      {user ? (
+        <>
+          <li>
+            <Link to="/" className="nav-link text-base">
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link to="/user/profile" className="nav-link text-base">
+              Profile
+            </Link>
+          </li>
+        </>
+      ) : (
+        <>
+          <li>
+            <Link to="/user/register" className="nav-link text-base">
+              Register
+            </Link>
+          </li>
+          <li>
+            <Link to="/user/login" className="nav-link text-base">
+              Login
+            </Link>
+          </li>
+        </>
       )}
-
-      {!isMobile &&
-        links.map((link) => (
-          <NavLink
-            key={link.to}
-            to={link.to}
-            className={`text-white hover:text-green-500 ${
-              location.pathname === link.to ? "border-b-2 border-white" : ""
-            }`}
-            onClick={linkClickHandler}
-          >
-            {link.text}
-          </NavLink>
-        ))}
-    </div>
+    </>
   );
 };
 
-const Navbar = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-  };
-
+const Navbar = ({ user }) => {
   return (
-    <nav className="bg-gray-800 p-4">
-      <div className="max-w-screen-xl mx-auto flex justify-between items-center">
-        {/* Logo */}
-        <Link to="/" className="text-white text-xl font-bold">
-          TODO
-        </Link>
+    <div className="bg-base-100">
+      <div className="navbar max-w-screen-2xl mx-auto">
+        <div className="navbar-start">
+          <Link to="/" className="font-bold text-xl">
+            MRB | TODO
+          </Link>
+        </div>
 
-        {/* Navigation Links */}
-        <NavLinks isMobile={false} />
-
-        {/* Mobile Navigation (Hidden by default) */}
-        <div className="md:hidden">
-          <button onClick={toggleMobileMenu}>
-            <svg
-              className="text-white h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
+        <div className="navbar-end">
+          <ul className="menu menu-horizontal px-1 hidden sm:flex">
+            <NavLinks user={user} />
+          </ul>
+          <div className="dropdown">
+            <div tabIndex={0} role="button" className="btn btn-ghost sm:hidden">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h8m-8 6h16"
+                />
+              </svg>
+            </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-36 right-0"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16m-7 6h7"
-              ></path>
-            </svg>
-          </button>
-          {mobileMenuOpen && (
-            <NavLinks isMobile={true} closeMobileMenu={toggleMobileMenu} />
-          )}
+              <NavLinks user={user} />
+            </ul>
+          </div>
         </div>
       </div>
-    </nav>
+    </div>
   );
 };
 

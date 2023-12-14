@@ -23,7 +23,7 @@ function App() {
       try {
         const userData = await getUserProfile();
         setUser(userData);
-        console.log(userData);
+        // console.log(userData);
       } catch (error) {
         console.error(
           "Failed to fetch user profile. Error_Status:",
@@ -44,7 +44,7 @@ function App() {
   return (
     <div className="App bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%">
       <BrowserRouter>
-        <Navbar />
+        <Navbar user={user} />
         <Routes>
           <Route path="/" element={user ? <TodoList /> : <Home />} />
           <Route path="/todo/create" element={<CreateTodo />} />
