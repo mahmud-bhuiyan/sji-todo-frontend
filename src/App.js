@@ -10,9 +10,11 @@ import { AuthContext } from "./services/AuthProvider";
 import { getUserProfile } from "./services/user";
 import UpdateProfile from "./components/UpdateProfile";
 import UpdatePassword from "./components/UpdatePassword";
+import CreateTodo from "./components/CreateTodo";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
-  const { setUser } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -40,7 +42,8 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={user ? <Dashboard /> : <Home />} />
+          <Route path="/todo/create" element={<CreateTodo />} />
           <Route path="/user/register" element={<Register />} />
           <Route path="/user/login" element={<Login />} />
           <Route path="/user/profile" element={<Profile />} />
