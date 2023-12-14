@@ -12,6 +12,7 @@ import UpdateProfile from "./components/User/UpdateProfile";
 import UpdatePassword from "./components/User/UpdatePassword";
 import TodoList from "./pages/TodoList";
 import CreateTodo from "./components/Todo/CreateTodo";
+import ViewTodo from "./components/Todo/ViewTodo";
 
 function App() {
   const { user, setUser } = useContext(AuthContext);
@@ -47,6 +48,7 @@ function App() {
         <Routes>
           <Route path="/" element={user ? <TodoList /> : <Home />} />
           <Route path="/todo/create" element={<CreateTodo />} />
+          <Route path="/todo/view/:id" element={<ViewTodo />} />
           <Route path="/user/register" element={<Register />} />
           <Route path="/user/login" element={<Login />} />
           <Route path="/user/profile" element={<Profile />} />

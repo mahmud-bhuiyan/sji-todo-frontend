@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { deleteTodo, getUserTodos } from "../services/todo";
-import TodoItem from "../components/Todo/TodoItem";
+import TodoItems from "../components/Todo/TodoItems";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
@@ -26,11 +26,6 @@ const TodoList = () => {
 
     fetchTodos();
   }, []);
-
-  const handleView = (todoId) => {
-    // Todo: view action
-    console.log("View todo with id:", todoId);
-  };
 
   const handleUpdate = (todoId) => {
     // Todo: Update action
@@ -104,10 +99,9 @@ const TodoList = () => {
             </thead>
             <tbody>
               {todos.map((todo) => (
-                <TodoItem
+                <TodoItems
                   key={todo._id}
                   todo={todo}
-                  handleView={handleView}
                   handleUpdate={handleUpdate}
                   handleDelete={handleDelete}
                 />

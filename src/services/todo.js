@@ -33,6 +33,22 @@ export const getUserTodos = async () => {
 };
 
 // =============================================
+//                 Get Todo by ID
+// =============================================
+export const getTodoById = async (todoId) => {
+  try {
+    const response = await axiosSecure.get(`/tasks/${todoId}`);
+    return response.data;
+  } catch (error) {
+    console.error(
+      `Error fetching todo with ID ${todoId}. Error_Status:`,
+      error.response.status
+    );
+    throw error;
+  }
+};
+
+// =============================================
 //                    Delete Todo
 // =============================================
 export const deleteTodo = async (todoId) => {

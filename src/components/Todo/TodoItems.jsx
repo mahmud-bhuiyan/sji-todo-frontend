@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const TodoItem = ({ todo, handleView, handleUpdate, handleDelete }) => {
+const TodoItems = ({ todo,  handleUpdate, handleDelete }) => {
+  const navigate = useNavigate();
   const { _id, title, description, dueDate, status } = todo;
   return (
     <tr>
@@ -12,7 +14,7 @@ const TodoItem = ({ todo, handleView, handleUpdate, handleDelete }) => {
       <td className="py-2 px-4 border">{status}</td>
       <td className="py-2 px-4 border">
         <button
-          onClick={() => handleView(_id)}
+          onClick={() => navigate(`/todo/view/${_id}`)}
           className="bg-blue-500 text-white px-4 rounded hover:underline mx-2"
         >
           View
@@ -34,4 +36,4 @@ const TodoItem = ({ todo, handleView, handleUpdate, handleDelete }) => {
   );
 };
 
-export default TodoItem;
+export default TodoItems;
