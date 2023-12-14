@@ -10,7 +10,7 @@ export const createTodo = async (taskDetails) => {
 
     return response.data;
   } catch (error) {
-    console.error("Error creating task:", error.response.data.msg);
+    console.error("Error creating task. Error_Status:", error.response.status);
     throw error;
   }
 };
@@ -24,7 +24,10 @@ export const getUserTodos = async () => {
 
     return response.data;
   } catch (error) {
-    console.error("Error fetching todos for user:", error.response.data.msg);
+    console.error(
+      "Error fetching todos for user. Error_Status:",
+      error.response.status
+    );
     throw error;
   }
 };
@@ -38,7 +41,7 @@ export const deleteTodo = async (todoId) => {
 
     return response.data;
   } catch (error) {
-    console.error("Error deleting todo:", error.response.data.msg);
+    console.error("Error deleting todo. Error_Status:", error.response.status);
     throw error;
   }
 };

@@ -28,7 +28,7 @@ const Login = () => {
         console.log("Failed to login user");
       }
     } catch (error) {
-      console.error("Error logging in:", error.message);
+      console.error("Error logging in:", error);
     }
   };
 

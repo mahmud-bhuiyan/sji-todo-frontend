@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../services/AuthProvider";
-import { updateUserProfile } from "../services/user";
+import { AuthContext } from "../../services/AuthProvider";
+import { updateUserProfile } from "../../services/user";
 
 const UpdateProfile = () => {
   const {

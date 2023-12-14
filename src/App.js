@@ -4,14 +4,14 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Register from "./components/Auth/Register";
 import Login from "./components/Auth/Login";
-import Profile from "./components/Profile";
+import Profile from "./components/User/Profile";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "./services/AuthProvider";
 import { getUserProfile } from "./services/user";
-import UpdateProfile from "./components/UpdateProfile";
-import UpdatePassword from "./components/UpdatePassword";
-import CreateTodo from "./components/CreateTodo";
-import Dashboard from "./pages/Dashboard";
+import UpdateProfile from "./components/User/UpdateProfile";
+import UpdatePassword from "./components/User/UpdatePassword";
+import TodoList from "./pages/TodoList";
+import CreateTodo from "./components/Todo/CreateTodo";
 
 function App() {
   const { user, setUser } = useContext(AuthContext);
@@ -22,9 +22,12 @@ function App() {
       try {
         const userData = await getUserProfile();
         setUser(userData);
-        // console.log(userData);
+        console.log(userData);
       } catch (error) {
-        console.error("Failed to fetch user profile:", error);
+        console.error(
+          "Failed to fetch user profile. Error_Status:",
+          error.response.status
+        );
       } finally {
         setLoading(false);
       }
@@ -42,7 +45,7 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/" element={user ? <Dashboard /> : <Home />} />
+          <Route path="/" element={user ? <TodoList /> : <Home />} />
           <Route path="/todo/create" element={<CreateTodo />} />
           <Route path="/user/register" element={<Register />} />
           <Route path="/user/login" element={<Login />} />

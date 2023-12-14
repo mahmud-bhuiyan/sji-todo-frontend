@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { deleteTodo, getUserTodos } from "../services/todo";
-import TodoItem from "./TodoItem";
+import TodoItem from "../components/Todo/TodoItem";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
@@ -74,10 +75,13 @@ const TodoList = () => {
 
   return (
     <div className="max-w-screen-lg mx-auto p-4">
+      <Helmet>
+        <title>Dashboard | TODO</title>
+      </Helmet>
       <div className="flex justify-between mb-4">
         <h2 className="text-2xl font-semibold">Todo List</h2>
         <Link
-          className="font-semibold bg-green-500 hover:bg-green-600 text-white py-1 px-4 rounded uppercase "
+          className="font-semibold bg-indigo-600 hover:bg-indigo-700 text-white py-1 px-4 rounded uppercase"
           to="/todo/create"
         >
           Add Todo
@@ -88,9 +92,9 @@ const TodoList = () => {
         <p>No todos available.</p>
       ) : (
         <div className="max-w-screen-lg overflow-x-auto">
-          <table className="min-w-full border border-gray-300 text-center">
+          <table className="table text-center">
             <thead>
-              <tr>
+              <tr className="text-white font-semibold">
                 <th className="py-2 px-4 border">Title</th>
                 <th className="py-2 px-4 border">Description</th>
                 <th className="py-2 px-4 border">Due Date</th>

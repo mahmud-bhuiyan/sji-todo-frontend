@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../services/AuthProvider";
-import { createTodo } from "../services/todo";
+import { AuthContext } from "../../services/AuthProvider";
+import { createTodo } from "../../services/todo";
 
 const CreateTodo = () => {
   const {
