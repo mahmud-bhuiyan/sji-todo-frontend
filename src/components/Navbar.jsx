@@ -6,7 +6,6 @@ const NavLinks = ({ isMobile = false, closeMobileMenu }) => {
 
   const links = [
     { to: "/", text: "Home" },
-    { to: "/todo/create", text: "Create Todo" },
     { to: "/user/register", text: "Register" },
     { to: "/user/login", text: "Login" },
     { to: "/user/profile", text: "Profile" },
