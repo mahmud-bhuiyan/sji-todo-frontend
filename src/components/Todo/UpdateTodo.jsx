@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getTodoById, updateTodoById } from "../../services/todo";
+import { getTodoById, updateTodoById } from "../../services/api/todo";
 import { formatDateToInsert, formatDueToDisplay } from "../../utils/formatDate";
 
 const UpdateTodo = () => {

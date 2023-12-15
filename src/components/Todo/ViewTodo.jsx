@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getTodoById } from "../../services/todo";
+import { getTodoById } from "../../services/api/todo";
 import { formatDueToDisplay } from "../../utils/formatDate";
 
 const ViewTodo = () => {

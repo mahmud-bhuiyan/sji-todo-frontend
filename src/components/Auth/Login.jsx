@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { loginUser } from "../../services/user";
-import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../services/AuthProvider";
+import { loginUser } from "../../services/api/user";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../shared/context/AuthProvider";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const {
@@ -13,20 +14,34 @@ const Login = () => {
   } = useForm();
 
   const navigate = useNavigate();
-  const { setUser } = useContext(AuthContext);
+  const { signIn } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     try {
-      const response = await loginUser(data);
+      // loginUser api
+      const userData = {
+        email: data.email,
+        password: data.password,
+      };
 
-      if (response.user._id) {
-        setUser(response.user);
-        // console.log(response.user);
-        navigate("/");
-        console.log("User logged in successfully");
-      } else {
+      const response = await loginUser(userData);
+
+      if (!response?.user?._id) {
         console.log("Failed to login user");
       }
+
+      // login with firebase
+      signIn(data.email, data.password)
+        .then((result) => {
+          const user = result.user;
+          navigate("/");
+          toast("User logged in successfully");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage);
+        });
     } catch (error) {
       console.error("Error logging in:", error);
     }
@@ -75,13 +90,23 @@ const Login = () => {
           )}
         </div>
 
-        <button
+        <input
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
-        >
-          Login
-        </button>
+          value="Login"
+          className="bg-blue-500 text-white w-full mt-2 px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+        />
       </form>
+      <div className="mt-4 text-center">
+        <p>
+          New here?
+          <Link to="/user/register">
+            <span className="text-orange-600 font-bold text-lg">
+              {" "}
+              Create an account
+            </span>
+          </Link>
+        </p>
+      </div>
     </div>
   );
 };

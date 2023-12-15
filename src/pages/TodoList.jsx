@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { deleteTodo, getUserTodos } from "../services/todo";
+import { deleteTodo, getUserTodos } from "../services/api/todo";
 import TodoItems from "../components/Todo/TodoItems";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";

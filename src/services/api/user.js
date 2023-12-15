@@ -1,5 +1,4 @@
-import { axiosOpen, axiosSecure } from "../utils/axios";
-
+import { axiosOpen, axiosSecure } from "./axios";
 // =============================================
 //                     register
 // =============================================
@@ -14,8 +13,10 @@ export const registerUser = async (user) => {
     // console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error("Error registering user. Error_Status:",
-      error.response.status);
+    console.error(
+      "Error registering user. Error_Status:",
+      error.response.status
+    );
     throw error;
   }
 };
@@ -34,8 +35,7 @@ export const loginUser = async (credentials) => {
     // console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error("Error logging in. Error_Status:",
-      error.response.status);
+    console.error("Error logging in. Error_Status:", error.response.status);
     throw error;
   }
 };
@@ -49,8 +49,7 @@ export const logoutUser = async () => {
     localStorage.removeItem("userToken");
     return { success: true };
   } catch (error) {
-    console.error("Error logging out. Error_Status:",
-      error.response.status);
+    console.error("Error logging out. Error_Status:", error.response.status);
     throw error;
   }
 };
@@ -80,8 +79,10 @@ export const updateUserProfile = async (updatedUserData) => {
     const response = await axiosSecure.patch("/users/update", updatedUserData);
     return response.data;
   } catch (error) {
-    console.error("Error updating user profile. Error_Status:",
-      error.response.status);
+    console.error(
+      "Error updating user profile. Error_Status:",
+      error.response.status
+    );
     throw error;
   }
 };

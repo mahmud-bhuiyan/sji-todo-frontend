@@ -1,4 +1,4 @@
-const { axiosSecure } = require("../utils/axios");
+import { axiosSecure } from "./axios";
 
 // =============================================
 //                   Create Todo

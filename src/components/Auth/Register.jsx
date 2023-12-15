@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { registerUser } from "../../services/user";
-import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../services/AuthProvider";
+import { registerUser } from "../../services/api/user";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../shared/context/AuthProvider";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const {
@@ -14,20 +15,36 @@ const Register = () => {
   } = useForm();
 
   const navigate = useNavigate();
-  const { setUser } = useContext(AuthContext);
+  const { createUser } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     try {
-      const response = await registerUser(data);
+      // registerUser api
+      const userData = {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        confirmPassword: data.confirmPassword,
+      };
 
-      if (response.user._id) {
-        setUser(response.user);
-        console.log(response.user);
-        navigate("/");
-        console.log("User registered successfully");
-      } else {
+      const response = await registerUser(userData);
+
+      if (!response?.user?._id) {
         console.log("Failed to register user");
       }
+
+      // register with firebase
+      createUser(data.email, data.password)
+        .then((result) => {
+          const loggedUser = result.user;
+          toast("User created successfully");
+          navigate("/");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage);
+        });
     } catch (error) {
       console.error("ERROR:", error.response.data.msg);
     }
@@ -80,6 +97,10 @@ const Register = () => {
                 value: 6,
                 message: "Password must be at least 6 characters",
               },
+              maxLength: {
+                value: 20,
+                message: "Password can not be more than 20 characters",
+              },
             })}
           />
           {errors.password && (
@@ -108,9 +129,17 @@ const Register = () => {
         <input
           type="submit"
           value="Register"
-          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+          className="bg-blue-500 text-white w-full mt-2 px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
         />
       </form>
+      <div className="mt-4 text-center">
+        <p>
+          Already have an account?
+          <Link to="/user/login">
+            <span className="text-orange-600 font-bold text-lg"> Login</span>
+          </Link>
+        </p>
+      </div>
     </div>
   );
 };

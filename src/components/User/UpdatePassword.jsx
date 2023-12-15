@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../services/AuthProvider";
-import { updateUserPassword } from "../../services/user";
+import { updateUserPassword } from "../../services/api/user";
+import { AuthContext } from "../../shared/context/AuthProvider";
 
 const UpdatePassword = () => {
   const {

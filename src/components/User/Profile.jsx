@@ -1,19 +1,26 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { logoutUser } from "../../services/user";
+import { logoutUser } from "../../services/api/user";
 import { Helmet } from "react-helmet-async";
-import { AuthContext } from "../../services/AuthProvider";
+import { AuthContext } from "../../shared/context/AuthProvider";
 
 const Profile = () => {
   const navigate = useNavigate();
-  const { user, setUser } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
 
   const handleLogout = async () => {
     try {
+      // logout api
       await logoutUser();
-      setUser({});
-      navigate("/user/login");
-      window.location.reload();
+
+      // firebase with logout
+      logout()
+        .then(() => {
+          navigate("/user/login");
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
     } catch (error) {
       console.error("Error logging out:", error.message);
     }
@@ -26,13 +33,13 @@ const Profile = () => {
       </Helmet>
       <h2 className="text-2xl font-semibold mb-4 uppercase">User Profile</h2>
 
-      <div className="mb-4">
-        <p className="mb-2">
-          <span className="font-semibold">Name:</span> {user?.name}
-        </p>
-        <p className="mb-2">
-          <span className="font-semibold">Email:</span> {user?.email}
-        </p>
+      <div className="mb-8">
+        <img
+          src={user?.photoURL}
+          alt={user?.name || user?.displayName || "user image"}
+        />
+        <p className="mb-2 font-semibold">{user?.name || user?.displayName}</p>
+        <p className="mb-2 font-semibold">{user?.email}</p>
       </div>
 
       <div className="flex flex-col space-y-4">
