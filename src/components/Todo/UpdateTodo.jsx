@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getTodoById, updateTodoById } from "../../services/todo";
 import { formatDateToInsert, formatDueToDisplay } from "../../utils/formatDate";
 
@@ -118,12 +118,21 @@ const UpdateTodo = () => {
           )}
         </div>
 
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
-        >
-          Update Todo
-        </button>
+        {/* button  */}
+        <div className="mt-4 flex justify-between">
+          <button
+            type="submit"
+            className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:shadow-outline-green active:bg-green-800"
+          >
+            Update Todo
+          </button>
+          <Link
+            to="/"
+            className="bg-blue-500 text-white px-8 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+          >
+            Back
+          </Link>
+        </div>
       </form>
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../services/AuthProvider";
 import { createTodo } from "../../services/todo";
 
@@ -41,7 +41,7 @@ const CreateTodo = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded shadow-md">
+    <div className="max-w-md mx-auto m-4 md:mt-8 p-6 bg-white rounded shadow-md">
       <Helmet>
         <title>Create Todo | TODO</title>
       </Helmet>
@@ -89,12 +89,21 @@ const CreateTodo = () => {
           )}
         </div>
 
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
-        >
-          Create Todo
-        </button>
+        {/* button  */}
+        <div className="mt-4 flex justify-between">
+          <button
+            type="submit"
+            className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:shadow-outline-green active:bg-green-800"
+          >
+            Create Todo
+          </button>
+          <Link
+            to="/"
+            className="bg-blue-500 text-white px-8 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+          >
+            Back
+          </Link>
+        </div>
       </form>
     </div>
   );

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getTodoById } from "../../services/todo";
+import { formatDueToDisplay } from "../../utils/formatDate";
 
 const ViewTodo = () => {
   const { id } = useParams();
@@ -38,7 +39,7 @@ const ViewTodo = () => {
           </tr>
           <tr>
             <td className="font-semibold border-r-2">Due Date:</td>
-            <td>{new Date(todo.dueDate).toLocaleDateString("en-GB")}</td>
+            <td>{formatDueToDisplay(todo.dueDate)}</td>
           </tr>
           <tr>
             <td className="font-semibold border-r-2">Status:</td>
@@ -47,8 +48,11 @@ const ViewTodo = () => {
         </tbody>
       </table>
       <div className="mt-4">
-        <Link to="/" className="btn btn-sm btn-primary px-6">
-          See All
+        <Link
+          to="/"
+          className="bg-blue-500 text-white px-8 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+        >
+          Back
         </Link>
       </div>
     </div>
