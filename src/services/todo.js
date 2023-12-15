@@ -49,7 +49,22 @@ export const getTodoById = async (todoId) => {
 };
 
 // =============================================
-//                    Delete Todo
+//                Update Todo by ID
+// =============================================
+export const updateTodoById = async (taskId, taskDetails) => {
+  try {
+    const response = await axiosSecure.patch(`/tasks/${taskId}`, taskDetails);
+    console.log(response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error("Error updating task. Error_Status:", error.response.status);
+    throw error;
+  }
+};
+
+// =============================================
+//                  Delete Todo
 // =============================================
 export const deleteTodo = async (todoId) => {
   try {

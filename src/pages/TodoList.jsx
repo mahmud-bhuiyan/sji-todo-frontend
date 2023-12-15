@@ -27,11 +27,6 @@ const TodoList = () => {
     fetchTodos();
   }, []);
 
-  const handleUpdate = (todoId) => {
-    // Todo: Update action
-    console.log("Update todo with id:", todoId);
-  };
-
   const handleDelete = async (todoId) => {
     Swal.fire({
       title: "Are you sure?",
@@ -102,7 +97,6 @@ const TodoList = () => {
                 <TodoItems
                   key={todo._id}
                   todo={todo}
-                  handleUpdate={handleUpdate}
                   handleDelete={handleDelete}
                 />
               ))}

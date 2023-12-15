@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const TodoItems = ({ todo,  handleUpdate, handleDelete }) => {
+const TodoItems = ({ todo, handleDelete }) => {
   const navigate = useNavigate();
   const { _id, title, description, dueDate, status } = todo;
   return (
@@ -20,7 +20,7 @@ const TodoItems = ({ todo,  handleUpdate, handleDelete }) => {
           View
         </button>
         <button
-          onClick={() => handleUpdate(_id)}
+          onClick={() => navigate(`/todo/update/${_id}`)}
           className="bg-green-500 text-white px-4 rounded hover:underline m-2"
         >
           Update
