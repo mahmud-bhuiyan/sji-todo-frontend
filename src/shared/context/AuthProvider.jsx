@@ -8,12 +8,14 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { app } from "../../config/firebase.config";
+import { getUserTodos } from "../../services/api/todo";
 
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [todos, setTodos] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // user create/register
@@ -53,26 +55,6 @@ const AuthProvider = ({ children }) => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-  //     setUser(currentUser);
-  //     console.log("Current User: ", currentUser);
-  //     setLoading(false);
-
-  //     if (currentUser?.email) {
-  //       try {
-  //         const userProfile = await getUserProfile();
-  //         console.log("User Profile: ", userProfile.user.name);
-  //         // setUser(userProfile.user);
-  //       } catch (error) {
-  //         console.error("Error fetching user profile:", error);
-  //       }
-  //     }
-  //   });
-
-  //   return () => unsubscribe();
-  // }, []);
-
   const authInfo = {
     user,
     loading,
@@ -80,6 +62,7 @@ const AuthProvider = ({ children }) => {
     updateUserProfile,
     signIn,
     logout,
+    todos,
   };
 
   return (
