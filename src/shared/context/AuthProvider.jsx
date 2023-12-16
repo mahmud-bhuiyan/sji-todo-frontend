@@ -45,13 +45,33 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      console.log("Current User: ", currentUser?.displayName);
+      console.log("Current User: ", currentUser);
       setLoading(false);
     });
     return () => {
       return unsubscribe();
     };
   }, []);
+
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+  //     setUser(currentUser);
+  //     console.log("Current User: ", currentUser);
+  //     setLoading(false);
+
+  //     if (currentUser?.email) {
+  //       try {
+  //         const userProfile = await getUserProfile();
+  //         console.log("User Profile: ", userProfile.user.name);
+  //         // setUser(userProfile.user);
+  //       } catch (error) {
+  //         console.error("Error fetching user profile:", error);
+  //       }
+  //     }
+  //   });
+
+  //   return () => unsubscribe();
+  // }, []);
 
   const authInfo = {
     user,

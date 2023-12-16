@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 import { updateUserProfile } from "../../services/api/user";
 import { AuthContext } from "../../shared/context/AuthProvider";
+import { toast } from "react-toastify";
 
 const UpdateProfile = () => {
   const {
@@ -15,12 +15,12 @@ const UpdateProfile = () => {
   } = useForm();
 
   const navigate = useNavigate();
-  const { user, setUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   // Set initial form values when the component mounts
   React.useEffect(() => {
     if (user) {
-      setValue("name", user.name);
+      setValue("name", user?.name || user?.displayName);
       setValue("email", user.email);
     }
   }, [user, setValue]);
@@ -28,11 +28,10 @@ const UpdateProfile = () => {
   const onSubmit = async (data) => {
     try {
       const response = await updateUserProfile(data);
-
-      setUser(response);
-      console.log("User profile updated successfully");
+      toast("User profile updated successfully");
       navigate("/user/profile");
     } catch (error) {
+      toast("Something went wrong!");
       console.error(
         "Error updating user profile:",
         error.response?.data?.msg || error.message
@@ -76,11 +75,20 @@ const UpdateProfile = () => {
           )}
         </div>
 
-        <input
-          type="submit"
-          value="Update"
-          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
-        />
+        {/* button  */}
+        <div className="mt-4 flex justify-between">
+          <input
+            type="submit"
+            value="Update"
+            className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:shadow-outline-green active:bg-green-800"
+          />
+          <Link
+            to="/user/profile"
+            className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+          >
+            Back
+          </Link>
+        </div>
       </form>
     </div>
   );

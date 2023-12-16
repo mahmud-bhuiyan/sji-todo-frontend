@@ -35,9 +35,12 @@ const Profile = () => {
 
       <div className="mb-8">
         {user?.photoURL && (
-          <img src={user.photoURL} alt={user.name || "user image"} />
+          <img
+            src={user?.photoURL}
+            alt={user?.name || user?.displayName || "user image"}
+          />
         )}
-        <p className="mb-2 font-semibold">{user?.name || user?.displayName}</p>
+        <p className="mb-2 font-semibold">{user?.displayName}</p>
         <p className="mb-2 font-semibold">{user?.email}</p>
       </div>
 

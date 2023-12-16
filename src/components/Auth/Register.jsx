@@ -44,11 +44,11 @@ const Register = () => {
           updateUserProfile(data?.name, data?.photo)
             .then(() => {
               // console.log("name and image added");
+              reset();
+              navigate(from, { replace: true });
+              toast("User created successfully");
             })
             .catch((error) => console.log(error.message));
-          reset();
-          navigate(from, { replace: true });
-          toast("User created successfully");
         })
         .catch((error) => {
           const errorCode = error.code;

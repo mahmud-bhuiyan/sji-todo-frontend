@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../shared/context/AuthProvider";
 import { createTodo } from "../../services/api/todo";
+import { toast } from "react-toastify";
 
 const CreateTodo = () => {
   const {
@@ -13,7 +12,6 @@ const CreateTodo = () => {
   } = useForm();
 
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     try {
@@ -24,16 +22,15 @@ const CreateTodo = () => {
         title: data.title,
         description: data.description,
         dueDate: dateOnly,
-        owner: user._id,
       };
 
       const response = await createTodo(todoData);
 
       if (response.task._id) {
         navigate("/");
-        console.log("Todo created successfully");
+        toast("Todo created successfully");
       } else {
-        console.log("Failed to create todo");
+        toast("Failed to create todo");
       }
     } catch (error) {
       console.error("Error creating todo:", error.message);

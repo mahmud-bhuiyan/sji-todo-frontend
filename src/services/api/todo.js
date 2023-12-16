@@ -54,7 +54,7 @@ export const getTodoById = async (todoId) => {
 export const updateTodoById = async (taskId, taskDetails) => {
   try {
     const response = await axiosSecure.patch(`/tasks/${taskId}`, taskDetails);
-    console.log(response.data);
+    // console.log(response.data);
 
     return response.data;
   } catch (error) {

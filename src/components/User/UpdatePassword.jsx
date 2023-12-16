@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { updateUserPassword } from "../../services/api/user";
-import { AuthContext } from "../../shared/context/AuthProvider";
+import { toast } from "react-toastify";
 
 const UpdatePassword = () => {
   const {
@@ -14,22 +13,20 @@ const UpdatePassword = () => {
   } = useForm();
 
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     try {
       const passwordData = {
-        userId: user._id,
         currentPassword: data.currentPassword,
         newPassword: data.newPassword,
         confirmPassword: data.confirmPassword,
       };
 
-      await updateUserPassword(passwordData);
-
-      console.log("Password updated successfully");
+      const response = await updateUserPassword(passwordData);
+      toast("Password updated successfully");
       navigate("/user/profile");
     } catch (error) {
+      toast("Something went wrong!");
       console.error(
         "Error updating user password:",
         error.response?.data?.msg || error.message
@@ -96,11 +93,20 @@ const UpdatePassword = () => {
           )}
         </div>
 
-        <input
-          type="submit"
-          value="Update Password"
-          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
-        />
+        {/* button  */}
+        <div className="mt-4 flex justify-between">
+          <input
+            type="submit"
+            value="Update Password"
+            className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:shadow-outline-green active:bg-green-800"
+          />
+          <Link
+            to="/user/profile"
+            className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+          >
+            Back
+          </Link>
+        </div>
       </form>
     </div>
   );

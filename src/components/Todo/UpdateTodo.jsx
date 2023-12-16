@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getTodoById, updateTodoById } from "../../services/api/todo";
 import { formatDateToInsert, formatDueToDisplay } from "../../utils/formatDate";
+import { toast } from "react-toastify";
 
 const UpdateTodo = () => {
   const {
@@ -45,8 +46,9 @@ const UpdateTodo = () => {
 
       await updateTodoById(id, dataToUpdate);
       navigate("/");
-      console.log("Todo updated successfully");
+      toast("Todo updated successfully");
     } catch (error) {
+      toast("Something went wrong!");
       console.error("Error updating todo:", error.message);
     }
   };

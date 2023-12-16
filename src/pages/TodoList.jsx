@@ -4,6 +4,7 @@ import TodoItems from "../components/Todo/TodoItems";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
+import { toast } from "react-toastify";
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
@@ -46,18 +47,10 @@ const TodoList = () => {
             prevTodos.filter((todo) => todo._id !== todoId)
           );
 
-          Swal.fire({
-            title: "Deleted!",
-            text: "Your todo has been deleted.",
-            icon: "success",
-          });
+          toast("Your todo has been deleted.");
         } catch (error) {
           console.error("Error deleting todo:", error.message);
-          Swal.fire({
-            title: "Error!",
-            text: "An error occurred while deleting todo. Please try again later.",
-            icon: "error",
-          });
+          toast("An error occurred!");
         }
       }
     });
