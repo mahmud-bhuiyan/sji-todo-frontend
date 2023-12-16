@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { loginUser } from "../../services/api/user";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../shared/context/AuthProvider";
 import { toast } from "react-toastify";
 
@@ -10,10 +10,14 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const { signIn } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
@@ -34,7 +38,8 @@ const Login = () => {
       signIn(data.email, data.password)
         .then((result) => {
           const user = result.user;
-          navigate("/");
+          reset();
+          navigate(from, { replace: true });
           toast("User logged in successfully");
         })
         .catch((error) => {

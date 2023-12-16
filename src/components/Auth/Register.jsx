@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { registerUser } from "../../services/api/user";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../shared/context/AuthProvider";
 import { toast } from "react-toastify";
 
@@ -10,12 +10,16 @@ const Register = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
     watch,
   } = useForm();
 
   const navigate = useNavigate();
-  const { createUser } = useContext(AuthContext);
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
+  const { createUser, updateUserProfile } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     try {
@@ -37,8 +41,14 @@ const Register = () => {
       createUser(data.email, data.password)
         .then((result) => {
           const loggedUser = result.user;
+          updateUserProfile(data?.name, data?.photo)
+            .then(() => {
+              // console.log("name and image added");
+            })
+            .catch((error) => console.log(error.message));
+          reset();
+          navigate(from, { replace: true });
           toast("User created successfully");
-          navigate("/");
         })
         .catch((error) => {
           const errorCode = error.code;
