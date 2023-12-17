@@ -34,7 +34,7 @@ const Register = () => {
       const response = await registerUser(userData);
 
       if (!response?.user?._id) {
-        console.log("Failed to register user");
+        toast("Failed to register user");
       }
 
       // register with firebase

@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { useContext } from "react";
 import Navbar from "./components/Navbar";
@@ -16,6 +16,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PrivateRoute from "./components/PrivateRoute";
 import { AuthContext } from "./shared/context/AuthProvider";
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -93,6 +94,10 @@ function App() {
               </PrivateRoute>
             }
           />
+
+          <Route path="/error" element={<ErrorPage />} />
+          {/* this route catch any unmatched routes  */}
+          <Route path="*" element={<Navigate to="/error" />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer />

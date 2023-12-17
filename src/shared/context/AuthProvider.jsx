@@ -8,14 +8,12 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { app } from "../../config/firebase.config";
-import { getUserTodos } from "../../services/api/todo";
 
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [todos, setTodos] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // user create/register
@@ -62,7 +60,6 @@ const AuthProvider = ({ children }) => {
     updateUserProfile,
     signIn,
     logout,
-    todos,
   };
 
   return (

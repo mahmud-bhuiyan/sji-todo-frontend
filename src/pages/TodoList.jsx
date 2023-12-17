@@ -5,15 +5,18 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
 import { toast } from "react-toastify";
+import Loader from "../components/Loader";
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchTodos = async () => {
       try {
         const response = await getUserTodos();
         // console.log(response);
+        setLoading(false);
 
         if (response && response.tasks) {
           setTodos(response.tasks);
@@ -71,8 +74,10 @@ const TodoList = () => {
         </Link>
       </div>
 
-      {todos.length === 0 ? (
-        <p>No todos available.</p>
+      {loading ? (
+        <div className="w-full h-[300px] flex justify-center items-center">
+          <Loader />
+        </div>
       ) : (
         <div className="max-w-screen-lg overflow-x-auto">
           <table className="table text-center">
@@ -86,13 +91,21 @@ const TodoList = () => {
               </tr>
             </thead>
             <tbody>
-              {todos.map((todo) => (
-                <TodoItems
-                  key={todo._id}
-                  todo={todo}
-                  handleDelete={handleDelete}
-                />
-              ))}
+              {todos.length !== 0 ? (
+                todos.map((todo) => (
+                  <TodoItems
+                    key={todo._id}
+                    todo={todo}
+                    handleDelete={handleDelete}
+                  />
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5">
+                    <p className="text-white">No todos available.</p>
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
